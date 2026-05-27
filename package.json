@@ -1,0 +1,21 @@
+{
+  "name": "app-personas-devops",
+  "version": "1.0.0",
+  "description": "Una aplicación minimalista de gestión de personas para aprender Docker y DevOps",
+  "main": "app_de_prueba.js",
+  "scripts": {
+    "start": "node app_de_prueba.js",
+    "dev": "node app_de_prueba.js"
+  },
+  "keywords": [
+    "devops",
+    "docker",
+    "express",
+    "vanilla-js"
+  ],
+  "author": "Antigravity & Arman",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}

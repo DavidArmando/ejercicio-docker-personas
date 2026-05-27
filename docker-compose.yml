@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  web-app:
+    # Nombre del contenedor para que sea fácil identificarlo en docker ps
+    container_name: devops_personas_app
+    
+    # Construir la imagen a partir del Dockerfile de la raíz del proyecto
+    build:
+      context: .
+      dockerfile: Dockerfile
+      
+    # Mapeo de puertos: puerto_huesped:puerto_contenedor
+    ports:
+      - "3000:3000"
+      
+    # Variables de entorno pasadas al contenedor
+    environment:
+      - PORT=3000
+      - NODE_ENV=development # Cambiado a development para desarrollo local
+      
+    # Reiniciar automáticamente el contenedor si se cae
+    restart: unless-stopped
+    
+    # Healthcheck (Prueba de salud) - Un concepto clave de DevOps para monitoreo en Kubernetes/Docker
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/api/people"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s

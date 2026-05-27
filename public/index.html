@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DevOps Sandbox | Registro de Personas</title>
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Una aplicación web ultra-minimalista para la gestión y visualización de personas en entornos Dockerized.">
+  <meta name="author" content="DevOps Student">
+  <!-- Google Fonts: Outfit & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="style.css">
+  <!-- FontAwesome for Premium Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Background Decorative Glowing Orbs -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-logo">
+        <div class="logo-icon">
+          <i class="fa-solid fa-cubes"></i>
+        </div>
+        <div class="logo-text">
+          <h1>Ejercicio de <span>docker</span></h1>
+          <p>Entorno de Aprendizaje de Contenedores</p>
+        </div>
+      </div>
+    </header>
+
+    <!-- Dashboard Grid -->
+    <main class="dashboard-grid">
+      
+      <!-- Left Column: Form Card -->
+      <section class="card form-card">
+        <div class="card-header">
+          <div class="card-icon"><i class="fa-solid fa-user-plus"></i></div>
+          <h2>Registrar Persona</h2>
+        </div>
+        <p class="card-subtitle">Agrega un nuevo registro a la base de datos temporal en memoria.</p>
+
+        <form id="person-form" class="app-form" novalidate>
+          <div class="form-group">
+            <label for="input-id">Identificación (ID)</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-id-card input-icon"></i>
+              <input type="text" id="input-id" name="id" placeholder="Ej: 102030" required>
+            </div>
+            <span class="error-msg" id="error-id"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="input-name">Nombre Completo</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-user input-icon"></i>
+              <input type="text" id="input-name" name="name" placeholder="Ej: Juan Pérez" required>
+            </div>
+            <span class="error-msg" id="error-name"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="input-age">Edad</label>
+            <div class="input-wrapper">
+              <i class="fa-solid fa-calendar-days input-icon"></i>
+              <input type="number" id="input-age" name="age" min="0" max="150" placeholder="Ej: 28" required>
+            </div>
+            <span class="error-msg" id="error-age"></span>
+          </div>
+
+          <button type="submit" id="btn-submit" class="btn btn-primary">
+            <span>Agregar Registro</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </form>
+
+        <div id="form-feedback" class="feedback-toast hidden"></div>
+      </section>
+
+      <!-- Right Column: Table & Metrics -->
+      <div class="data-column">
+        <!-- Metrics Bar -->
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Total Personas</span>
+              <h3 id="stat-total">0</h3>
+            </div>
+            <div class="metric-icon blue-grad"><i class="fa-solid fa-users"></i></div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-info">
+              <span class="metric-label">Edad Promedio</span>
+              <h3 id="stat-avg">0</h3>
+            </div>
+            <div class="metric-icon purple-grad"><i class="fa-solid fa-chart-line"></i></div>
+          </div>
+        </div>
+
+        <!-- Table Card -->
+        <section class="card table-card">
+          <div class="card-header">
+            <div class="card-icon"><i class="fa-solid fa-table-list"></i></div>
+            <h2>Registros Existentes</h2>
+          </div>
+          <p class="card-subtitle">Datos actuales almacenados en el servidor Node.js.</p>
+
+          <div class="table-container">
+            <table id="people-table" class="app-table">
+              <thead>
+                <tr>
+                  <th scope="col"><i class="fa-solid fa-hashtag"></i> ID</th>
+                  <th scope="col"><i class="fa-solid fa-user"></i> Nombre</th>
+                  <th scope="col"><i class="fa-solid fa-calendar-day"></i> Edad</th>
+                </tr>
+              </thead>
+              <tbody id="table-body">
+                <!-- Se poblará dinámicamente con JavaScript -->
+                <tr class="table-loading">
+                  <td colspan="3">
+                    <div class="spinner"></div>
+                    Cargando registros...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Diseñado para pruebas de Docker y CI/CD.</p>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
