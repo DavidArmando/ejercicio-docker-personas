@@ -39,3 +39,26 @@ jobs:
         
         echo "Subiendo la imagen a ECR..."
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+    - name: Desplegar en servidor EC2 por SSH
+      uses: appleboy/ssh-action@v1.0.3
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      with:
+        host: ${{ secrets.EC2_HOST }}
+        username: ubuntu
+        key: ${{ secrets.EC2_SSH_KEY }}
+        envs: ECR_REGISTRY,AWS_REGION
+        script: |
+          echo "Iniciando sesión en ECR desde EC2..."
+          aws ecr get-login-password --region $AWS_REGION | sudo docker login --username AWS --password-stdin $ECR_REGISTRY
+          
+          echo "Deteniendo el contenedor viejo..."
+          sudo docker stop servidor_web || true
+          sudo docker rm servidor_web || true
+          
+          echo "Descargando la nueva imagen..."
+          sudo docker pull $ECR_REGISTRY/app-personas-docker:latest
+          
+          echo "Iniciando el nuevo contenedor..."
+          sudo docker run -d -p 3000:3000 --name servidor_web $ECR_REGISTRY/app-personas-docker:latest
