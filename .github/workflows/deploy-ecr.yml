@@ -51,8 +51,13 @@ jobs:
         envs: ECR_REGISTRY,AWS_REGION
         script: |
           export PATH=$PATH:/usr/bin:/usr/local/bin:/snap/bin
+          
+          echo "Verificando e instalando AWS CLI si es necesario..."
+          sudo apt-get update -y
+          sudo apt-get install awscli -y
+          
           echo "Iniciando sesión en ECR desde EC2..."
-          /usr/bin/aws ecr get-login-password --region $AWS_REGION | sudo docker login --username AWS --password-stdin $ECR_REGISTRY
+          aws ecr get-login-password --region $AWS_REGION | sudo docker login --username AWS --password-stdin $ECR_REGISTRY
           
           echo "Deteniendo el contenedor viejo..."
           sudo docker stop servidor_web || true
